@@ -6,7 +6,7 @@ const { GraphQLSchema, GraphQLObjectType } = require("graphql");
 const {} = require("./queries");
 
 // import mutations
-const {} = require("./mutation");
+const {} = require("./mutations");
 
 // Define QueryType
 const QueryType = new GraphQLObjectType({
