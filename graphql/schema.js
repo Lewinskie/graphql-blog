@@ -3,16 +3,16 @@
 const { GraphQLSchema, GraphQLObjectType } = require("graphql");
 
 // import queries
-const {} = require("./queries");
+const { users } = require("./queries");
 
 // import mutations
-const {} = require("./mutations");
+const { register, login } = require("./mutations");
 
 // Define QueryType
 const QueryType = new GraphQLObjectType({
   name: "QueryType",
   description: "Queries for the GraphQL API",
-  fields: {},
+  fields: { users },
 });
 
 //Define MutationType
@@ -20,7 +20,7 @@ const QueryType = new GraphQLObjectType({
 const MutationType = new GraphQLObjectType({
   name: "MutationType",
   description: "Mutations for the GraphQL API",
-  fields: {},
+  fields: { register, login },
 });
 
 module.exports = new GraphQLSchema({

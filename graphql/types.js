@@ -4,7 +4,12 @@ const Post = require("../models/Post");
 const Comment = require("../models/Comment");
 
 //import required stuff from graphql
-const { GraphQLID, GraphQLString, GraphQLList } = require("graphql");
+const {
+  GraphQLID,
+  GraphQLString,
+  GraphQLList,
+  GraphQLObjectType,
+} = require("graphql");
 
 const UserType = new GraphQLObjectType({
   name: "User",
