@@ -55,6 +55,8 @@ const login = {
     if (!user || user.password !== password) {
       throw new Error("Incorrect credentials");
     }
+    console.log(user);
+
     const token = createJwtToken(user);
     return token;
   },
