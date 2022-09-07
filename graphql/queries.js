@@ -1,8 +1,8 @@
 // import required stuff from graphql
-const { GraphQLList } = require("graphql");
+const { GraphQLList, GraphQLID } = require("graphql");
 
 // import types
-const { UserType } = require("./types");
+const { UserType, PostType } = require("./types");
 
 // import mongoose models
 const User = require("../models/User");
@@ -16,4 +16,34 @@ const users = {
   },
 };
 
-module.exports = { users };
+const user = {
+  type: UserType,
+  description: "Return single user by id",
+  args: {
+    id: { type: GraphQLID },
+  },
+  async resolve(parent, args) {
+    return User.findById(args.id);
+  },
+};
+
+const posts = {
+  type: new GraphQLList(PostType),
+  description: "Return all posts",
+  resolve(parent, args) {
+    return Post.find();
+  },
+};
+
+const post = {
+  type: PostType,
+  description: "Return single post by id",
+  args: {
+    id: { type: GraphQLID },
+  },
+  resolve(parent, args) {
+    return Post.findById(args.id);
+  },
+};
+
+module.exports = { users, user, posts, post };

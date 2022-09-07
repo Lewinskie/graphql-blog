@@ -33,11 +33,11 @@ const PostType = new GraphQLObjectType({
     author: {
       type: UserType,
       resolve(parent, args) {
-        return User.findById(parent.author.id);
+        return User.findById(parent.authorId);
       },
     },
     comments: {
-      type: GraphQLList(CommentType),
+      type: new GraphQLList(CommentType),
       resolve(parent, args) {
         return Comment.find(parent.authorId);
       },
