@@ -1,9 +1,9 @@
 // import types
-const { UserType, PostType } = require("./types");
+const { UserType, PostType, CommentType } = require("./types");
 
 //import mongoose models
 const User = require("../models/User");
-// const Comment = require("../models/Comment");
+const Comment = require("../models/Comment");
 const Post = require("../models/Post");
 
 // import required stuff from graphql
@@ -83,4 +83,25 @@ const addPost = {
   },
 };
 
-module.exports = { register, login, addPost };
+const addComment = {
+  type: CommentType,
+  description: "Create a new comment",
+  args: {
+    comment: { type: GraphQLString },
+    postId: { type: GraphQLString },
+  },
+  async resolve(parent, args, { verifiedUser }) {
+    console.log("Verified user" + verifiedUser);
+    if (!verifiedUser) {
+      throw new Error("Unauthorized User!");
+    }
+    const comment = new Comment({
+      userId: verifiedUser._id,
+      postId: args.postId,
+      comment: args.comment,
+    });
+    return await comment.save();
+  },
+};
+
+module.exports = { register, login, addPost, addComment };

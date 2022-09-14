@@ -2,7 +2,7 @@
 const { GraphQLList, GraphQLID } = require("graphql");
 
 // import types
-const { UserType, PostType } = require("./types");
+const { UserType, PostType, CommentType } = require("./types");
 
 // import mongoose models
 const User = require("../models/User");
@@ -46,4 +46,23 @@ const post = {
   },
 };
 
-module.exports = { users, user, posts, post };
+const comments = {
+  type: new GraphQLList(CommentType),
+  description: "Return all comments",
+  resolve(parent, args) {
+    return Comment.find();
+  },
+};
+
+const comment = {
+  type: CommentType,
+  description: "Return single comment by id",
+  args: {
+    id: { type: GraphQLID },
+  },
+  resolve(parent, args) {
+    return Comment.findById(args.id);
+  },
+};
+
+module.exports = { users, user, posts, post, comment, comments };
